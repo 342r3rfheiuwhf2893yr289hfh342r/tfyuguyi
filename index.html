@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru"> <!-- Добавили атрибут lang -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Crypto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div id="starry-background"></div>
+
+  <main>  <!-- Обёртка для основного контента -->
+    <header class="header">
+      <a href="#" class="logo">El Crypto</a> <!-- Сделали логотип ссылкой -->
+      <nav class="nav">
+        <ul>
+          <li><a href="index (2).html" target="_blank">О криптовалюте</a></li>
+          <li><a href="#">Главная</a></li>
+          <li><a href="#">Услуги</a></li>
+        </ul>
+      </nav>
+      <aside class="contact"> <!--  Contact - это боковая информация -->
+        <p class="phone">+7 (982) 226-07-33</p> 
+      </aside>
+      <div class="buttons">
+        <button class="glow-button call-button">Звонить</button>
+        <button class="glow-button telegram-button">Написать в Telegram</button>
+      </div>
+    </header>
+  </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const numParticles = 500;
+
+    function Particle() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1 + 1;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.color = `rgba(255, 255, 255, ${Math.random() * 0.7 + 0.3})`;
+    }
+
+    Particle.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    };
+
+    Particle.prototype.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.x > canvas.width + this.size) this.x = -this.size;
+      if (this.x < -this.size) this.x = canvas.width + this.size;
+      if (this.y > canvas.height + this.size) this.y = -this.size;
+      if (this.y < -this.size) this.y = canvas.height + this.size;
+    };
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  });
+  </script>
+</body>
+</html>

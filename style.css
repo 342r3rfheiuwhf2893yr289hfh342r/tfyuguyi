@@ -1,0 +1,191 @@
+:root {
+    --primary-color: #00a699;
+    --secondary-color: #dc3545;
+    --accent-color: #FFD700;
+    --text-color: #333;
+    --background-color: #f0f0f0;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --main-font-size: 1rem;
+    --mobile-breakpoint: 768px;
+    --small-mobile-breakpoint: 480px;
+    --large-desktop-breakpoint: 1200px;
+    --animation-duration: 0.8s;
+    --animation-easing: ease-in-out;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif; /* Устанавливаем шрифт Roboto. */
+    line-height: 1.6; /* Устанавливаем межстрочный интервал 1.6. */
+    color: white; /* Устанавливаем цвет текста в белый. */
+    margin: 0; /* Убираем внешние отступы. */
+    padding: 0; /* Убираем внутренние отступы. */
+    font-size: var(--main-font-size); /* Устанавливаем размер шрифта из переменной. */
+    overflow: hidden; /* Скрываем переполнение контента. */
+    background-color: black; /* Устанавливаем черный цвет фона. */
+    border-radius: 5px; /* Устанавливаем скругленные углы (5px). */
+  }
+
+  .background-container {
+    position: relative; /* Делаем элемент позиционируемым относительно себя. */
+    min-height: 100vh; /* Минимальная высота 100% высоты окна viewport. */
+    width: 100%; /* Занимает всю ширину. */
+    overflow: hidden; /* Скрывает переполнение контента. */
+  }
+  .background-container::before {
+    content: ""; /* Создаем псевдоэлемент ::before. */
+    position: absolute; /* Абсолютное позиционирование. */
+    top: 0; /* Располагаем сверху. */
+    left: 0; /* Располагаем слева. */
+    width: 100%; /* Занимает всю ширину. */
+    height: 100%; /* Занимает всю высоту. */
+    z-index: -1; /* Помещаем под другие элементы. */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Линейный градиент от основного к второстепенному цвету. */
+    background-size: 400% 400%; /* Размер градиента. */
+    animation: gradientAnimation 15s ease infinite; /* Анимация градиента. */
+  } 
+
+  .content-container {
+    position: relative; /* Needed for absolute positioning of header */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+  .content-container.show {
+    opacity: 1; /* Устанавливаем непрозрачность 1 (видимый). */
+    transform: translateY(0); /* Убираем смещение по вертикали. */
+  }
+  
+
+  .header {
+    display: flex;
+    justify-content: space-between; /* Распределяет элементы между краями */
+    align-items: center;
+    padding: 1em;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    margin: 1em;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    animation: headerSlideIn var(--animation-duration) var(--animation-easing);
+  }
+  .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  .nav {
+    display: flex;
+    /* Добавляем чтобы текст был по центру */
+    justify-content: center;
+    flex-grow: 1; /* Позволяет навигации занимать доступное пространство */
+  }
+  .nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  .nav li {
+    margin: 0 0.5em;
+  }
+  .nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 0.5em 1em;
+    border-radius: 5px;
+  }
+
+  .nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .contact-buttons { /* Объединяем контакт и кнопки в один блок */
+    display: flex;
+    align-items: center;
+    gap: 1em; /* Пробел между контактом и кнопками */
+  }
+  .contact {
+    display: flex;
+    align-items: center;
+  }
+  .phone {
+    color: #00a699;
+    margin-left: 0.5em;
+    font-weight: bold;
+  }
+  .buttons {
+    display: flex;
+    gap: 1em;
+  }  
+
+  .buttons {
+    display: flex;
+    gap: 1em;
+  }
+
+  .glow-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--shadow-color);
+  }
+
+  .glow-button:hover {
+    background-color: darken(var(--primary-color), 10%);
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .nav {
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav li {
+      margin-bottom: 0.5em;
+    }
+    .logo {
+      font-size: 1.5em;
+      margin-bottom: 1em;
+    }
+  }
+
+  /* Styles for starry background (add your animation here) */
+  #starry-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2; /* Stars behind canvas */
+  }
+  .star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 2s infinite;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.5; }
+  }
+  #particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Canvas behind everything */
+  }
